@@ -68,8 +68,11 @@ def run_lipsync(
     inference_steps=20,
 ):
     config_path = pathlib.Path("LatentSync/configs/unet/stage2_512.yaml").absolute()
-    checkpoint_path = pathlib.Path("checkpoints/latentsync_unet.pt").absolute()
+    checkpoint_path = pathlib.Path(
+        "LatentSync/checkpoints/latentsync_unet.pt"
+    ).absolute()
 
+    print(checkpoint_path)
     config = OmegaConf.load(config_path)
 
     config["run"].update(
@@ -88,14 +91,14 @@ def run_lipsync(
         42,
     )
 
+    cwd = os.getcwd()
     os.chdir("LatentSync")
 
-    result = inference.main(
-        config=config,
-        args=args,
-    )
+    try:
+        inference.main(config=config, args=args)
+    finally:
+        os.chdir(cwd)
 
-    os.chdir("..")
     return vid_output_path
 
 
