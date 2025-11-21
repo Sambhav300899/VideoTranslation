@@ -59,51 +59,59 @@ python run_translation.py --i sample_data/Tanzania-2.mp4 --o sample_data/Tanzani
 
 Original
 ---
-https://github.com/user-attachments/assets/4b1a44e7-6318-4c77-8769-7d251a5e1817
+https://github.com/user-attachments/assets/5331de54-a52a-4ab4-9b71-d2b4fd914dc4
 </td>
 <td width="33%">
 
-Audio Translated
+Dubbed
 ---
-https://github.com/user-attachments/assets/34dc66b8-0212-416f-82bd-2b314003a11f
+https://github.com/user-attachments/assets/107ee213-586e-4d4d-9d72-a0306c92adf6
 </td>
 
 <td width="33%">
 
-Audio Translated with Lip Sync
+Lipsync
 ---
-https://github.com/user-attachments/assets/1123b7ab-c409-4e04-9053-cdaf7b8b38bc
+https://github.com/user-attachments/assets/ca3adec6-5179-4e28-b92c-a365f466a7d8
 </td>
 
 </tr>
 </table>
 
 ### XTTS_v2 TTS
-
 <table>
 <tr>
 <td width="33%">
 
 Original
 ---
-https://github.com/user-attachments/assets/4b1a44e7-6318-4c77-8769-7d251a5e1817
+https://github.com/user-attachments/assets/5331de54-a52a-4ab4-9b71-d2b4fd914dc4
 </td>
 <td width="33%">
 
-Audio Translated
+Dubbed
 ---
-https://github.com/user-attachments/assets/874b20c8-0496-4918-84d6-fba33d247763
+
+
+https://github.com/user-attachments/assets/b89298fb-4dd4-4b35-ad15-9b9be4b19ead
+
+
 </td>
 
 <td width="33%">
 
-Audio Translated with Lip Sync
+Lipsync
 ---
-https://github.com/user-attachments/assets/065b93d4-e294-4c9e-a33b-1ff446cec78c
+
+
+https://github.com/user-attachments/assets/864659b0-7562-482a-859b-b35da1e267da
+
+
 </td>
 
 </tr>
 </table>
+
 
 
 ## Pipeline Overview
