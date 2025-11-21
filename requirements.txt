@@ -13,4 +13,4 @@ omegaconf
 coqui-tts
 pedalboard
 noisereduce
-moviepy=2.1.2
+moviepy==2.1.2
