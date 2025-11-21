@@ -5,8 +5,7 @@ Notes on voice cloning models
 2.
 
 
-hf download ByteDance/LatentSync-1.5 whisper/tiny.pt --local-dir LatentSyncCkpts
-
+hf download ByteDance/LatentSync-1.5 whisper/tiny.pt --local-dir checkpoints
 hf download ByteDance/LatentSync-1.5 latentsync_unet.pt --local-dir checkpoints
 
 
@@ -17,3 +16,6 @@ https://github.com/resemble-ai/resemble-enhance
 https://github.com/RVC-Boss/GPT-SoVITS
 
 https://github.com/SWivid/F5-TTS/tree/main/src/f5_tts/infer
+
+
+2.8.0+cu126

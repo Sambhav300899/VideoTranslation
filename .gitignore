@@ -219,3 +219,5 @@ data
 generated
 .gradio
 LatentSyncCkpts
+ipynb_checkpoints
+checkpoints

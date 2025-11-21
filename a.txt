@@ -6,3 +6,11 @@ ffmpeg
 onnxruntime-gpu
 DeepCache
 ffmpeg-python
+pysrt 
+praat-parselmouth
+gradio
+omegaconf
+coqui-tts
+pedalboard
+noisereduce
+moviepy

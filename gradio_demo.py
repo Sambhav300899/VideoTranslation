@@ -1,8 +1,10 @@
+import os
+import sys
+
 import pathlib
 import gradio as gr
 import avtrans
 
-import sys
 import argparse
 from omegaconf import OmegaConf
 
@@ -11,6 +13,8 @@ from scripts import inference
 
 data_dir = pathlib.Path("generated")
 data_dir.mkdir(exist_ok=True)
+
+os.environ["COQUI_TOS_AGREED"] = "1"
 
 
 def create_args(
@@ -136,9 +140,9 @@ def translate_video(
         )
 
         run_lipsync(
-            video_path=lipsync_vid_path,
+            video_path=final_video_path,
             audio_path=translated_audio_path,
-            vid_output_path=final_video_path,
+            vid_output_path=lipsync_vid_path,
             guidance_scale=1.5,
             inference_steps=20,
         )
@@ -173,4 +177,4 @@ demo = gr.Interface(
 )
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(share=True)
