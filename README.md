@@ -51,14 +51,60 @@ python run_translation.py --i sample_data/Tanzania-2.mp4 --o sample_data/Tanzani
 
 ## Sample outputs
 
-### Tacotron2 as TTS model
-| Original | Translated | Translated with lip sync | 
-|---|---|---|
+### Tacotron2 TTS 
 
-### xtts_v2 as TTS model
-| Original | Translated | Translated with lip sync | 
-|---|---|---|
- 
+<table>
+<tr>
+<td width="33%">
+
+Original
+---
+https://github.com/user-attachments/assets/4b1a44e7-6318-4c77-8769-7d251a5e1817
+</td>
+<td width="33%">
+
+Audio Translated
+---
+https://github.com/user-attachments/assets/34dc66b8-0212-416f-82bd-2b314003a11f
+</td>
+
+<td width="33%">
+
+Audio Translated with Lip Sync
+---
+https://github.com/user-attachments/assets/1123b7ab-c409-4e04-9053-cdaf7b8b38bc
+</td>
+
+</tr>
+</table>
+
+### XTTS_v2 TTS
+
+<table>
+<tr>
+<td width="33%">
+
+Original
+---
+https://github.com/user-attachments/assets/4b1a44e7-6318-4c77-8769-7d251a5e1817
+</td>
+<td width="33%">
+
+Audio Translated
+---
+https://github.com/user-attachments/assets/874b20c8-0496-4918-84d6-fba33d247763
+</td>
+
+<td width="33%">
+
+Audio Translated with Lip Sync
+---
+https://github.com/user-attachments/assets/065b93d4-e294-4c9e-a33b-1ff446cec78c
+</td>
+
+</tr>
+</table>
+
 
 ## Pipeline Overview
 ![Pipeline Overview](sample_data/pipeline.png)
