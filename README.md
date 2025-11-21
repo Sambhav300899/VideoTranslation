@@ -77,7 +77,7 @@ The pipeline follows the following steps -
 2.  **Language Specificity**: Limited to English-to-German translation due to the chosen translation model (`opus-mt-en-de`).
 3.  **Single Speaker Assumption**: The Text-to-Speech (TTS) `xtts_v2/tacotron2` component assumes a single speaker; multi-speaker videos may lead to incorrect voice cloning or synthesis.
 4.  **Lip Sync Performance Overhead**: The `LatentSync` model is computationally intensive and leads to degradation in overall audio and video quality.
-5.  **Lack of Evaluation Metrics**: There are no objective metrics currently employed to evaluate the quality of the translated video, which makes the selection of TTS and Lip Sync models somewhat arbitrary.
+5.  **Lack of Evaluation Metrics**: There are no objective metrics currently employed to evaluate the quality of the translated video, which makes the selection of TTS and Lip Sync models somewhat arbitrary. I'm currently using the absolute difference between the original and translated audio as a proxy metric.
 6.  **Contextual Translation Limitations**: Sentence-level translation may lead to a loss of overall context. A potential improvement involves using Large Language Models (LLMs) with in-context learning for more coherent translation.
 7.  **Audio Flow Issues**: Sentence-level audio length timing adjustments might result in an unnatural or disrupted audio flow.
 8.  **Open-Source Lip Sync Quality**: The quality of available open-source Lip Sync models is not the greatest.
