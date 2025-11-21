@@ -68,7 +68,7 @@ def run_lipsync(
     inference_steps=20,
 ):
     config_path = pathlib.Path("LatentSync/configs/unet/stage2_512.yaml")
-    checkpoint_path = pathlib.Path("LatentSyncCkpts/latentsync_unet.pt")
+    checkpoint_path = pathlib.Path("checkpoints/latentsync_unet.pt")
 
     config = OmegaConf.load(config_path)
 
