@@ -67,12 +67,13 @@ def run_lipsync(
     guidance_scale=1.5,
     inference_steps=20,
 ):
-    config_path = pathlib.Path("LatentSync/configs/unet/stage2_512.yaml").absolute()
+    config_path = pathlib.Path(
+        "LatentSync/configs/unet/stage2_efficient.yaml"
+    ).absolute()
     checkpoint_path = pathlib.Path(
         "LatentSync/checkpoints/latentsync_unet.pt"
     ).absolute()
 
-    print(checkpoint_path)
     config = OmegaConf.load(config_path)
 
     config["run"].update(
@@ -88,17 +89,17 @@ def run_lipsync(
         vid_output_path,
         inference_steps,
         guidance_scale,
-        42,
+        1247,
     )
 
     cwd = os.getcwd()
-    os.chdir("LatentSync")
-
     try:
+        os.chdir("LatentSync")
         inference.main(config=config, args=args)
+    except Exception as e:
+        raise RuntimeError(f"Lipsync inference failed: {e}") from e
     finally:
         os.chdir(cwd)
-
     return vid_output_path
 
 
@@ -153,9 +154,19 @@ def translate_video(
             inference_steps=20,
         )
 
-        return lipsync_vid_path, translated_audio_path, round(abs_duration_diff, 2)
+        return (
+            final_video_path,
+            lipsync_vid_path,
+            translated_audio_path,
+            round(abs_duration_diff, 2),
+        )
     else:
-        return final_video_path, translated_audio_path, round(abs_duration_diff, 2)
+        return (
+            final_video_path,
+            None,
+            translated_audio_path,
+            round(abs_duration_diff, 2),
+        )
 
 
 demo = gr.Interface(
@@ -175,6 +186,7 @@ demo = gr.Interface(
     ],
     outputs=[
         gr.Video(label="Translated Video"),
+        gr.Video(label="Translated Video with Lipsync"),
         gr.Audio(label="Translated Audio", type="filepath"),
         gr.Textbox(label="Absolute Duration Difference"),
     ],

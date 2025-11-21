@@ -2,7 +2,7 @@ import pathlib
 
 import torch
 import tqdm
-import librosa
+import moviepy
 
 from avtrans import utils, voice_clone, translate
 
@@ -56,7 +56,8 @@ def translate_audio(
     abs_duration_diff = 0
     for i, audio_path in tqdm.tqdm(enumerate(audio_paths)):
         actual_duration = sentence_groups[i]["end"] - sentence_groups[i]["start"]
-        current_duration = librosa.get_duration(path=audio_path)
+        current_duration = moviepy.AudioFileClip(str(audio_path)).duration
+
         utils.stretch_speech(
             audio_path,
             chunks_path / f"{i}_stretched.wav",
