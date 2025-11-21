@@ -30,12 +30,12 @@ uv pip install -r requirements.txt
 
 Download checkpoints for LatentSync
 ```
-hf download ByteDance/LatentSync-1.5 whisper/tiny.pt --local-dir checkpoints
-hf download ByteDance/LatentSync-1.5 latentsync_unet.pt --local-dir checkpoints
+hf download ByteDance/LatentSync-1.5 whisper/tiny.pt --local-dir LatentSync/checkpoints
+hf download ByteDance/LatentSync-1.5 latentsync_unet.pt --local-dir LatentSync/checkpoints
 ```
 ## Usage
 
-Use the gradio demo to launch the demo, use the following command:
+To launch the Gradio demo, use the following command:
 ```
 python gradio_demo.py
 ```
