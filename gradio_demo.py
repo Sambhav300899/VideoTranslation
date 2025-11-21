@@ -67,9 +67,7 @@ def run_lipsync(
     guidance_scale=1.5,
     inference_steps=20,
 ):
-    config_path = pathlib.Path(
-        "LatentSync/configs/unet/stage2_efficient.yaml"
-    ).absolute()
+    config_path = pathlib.Path("LatentSync/configs/unet/stage2.yaml").absolute()
     checkpoint_path = pathlib.Path(
         "LatentSync/checkpoints/latentsync_unet.pt"
     ).absolute()

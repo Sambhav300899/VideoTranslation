@@ -36,10 +36,10 @@ if __name__ == "__main__":
     print("-" * 100)
     if lipsync_vid_path:
         print(
-            f"Translated Video = {final_video_path} \n Lipsync Video = {lipsync_vid_path} \n abs_duration_diff = {abs_duration_diff}"
+            f"Translated Video = {final_video_path}\nLipsync Video = {lipsync_vid_path}\nabs_duration_diff = {abs_duration_diff}"
         )
     else:
         print(
-            f"Translated Video = {final_video_path} \n abs_duration_diff = {abs_duration_diff}"
+            f"Translated Video = {final_video_path}\nabs_duration_diff = {abs_duration_diff}"
         )
     print("-" * 100)
