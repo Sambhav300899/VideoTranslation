@@ -1,30 +1,27 @@
-import utils
-import voice_clone
-import translate
 import pathlib
+
 import torch
 import tqdm
 import librosa
 
+from avtrans import utils, voice_clone, translate
 
-if __name__ == "__main__":
-    ## all paths
-    video_path = pathlib.Path("../../data/Tanzania-2.mp4")
-    srt_path = pathlib.Path("../../data/Tanzania-caption.srt")
-    extracted_audio_path = video_path.with_name(
-        video_path.stem + "_extracted_audio.wav"
-    )
-    translated_audio_path = video_path.with_name(video_path.stem + "_translated.wav")
-    translated_text_path = video_path.parent / "translated_text.txt"
-    final_video_path = video_path.with_name(video_path.stem + "_translated.mp4")
-    chunk_paths = pathlib.Path("../../data/chunks")
 
-    ## define our cloning and translation functions, add more models later
-    voice_clone_func = voice_clone.xtts_generate_from_transcript
-    translate_func = translate.helsinki_translate
-
+def translate_audio(
+    video_path,
+    srt_path,
+    extracted_audio_path,
+    translated_audio_path,
+    translated_text_path,
+    final_video_path,
+    chunks_path,
+    target_language,
+    enhance_audio,
+    voice_clone_func=voice_clone.xtts2_generate_from_transcript,
+    translate_func=translate.helsinki_translate,
+):
     ## create dirs
-    chunk_paths.mkdir(exist_ok=True)
+    chunks_path.mkdir(exist_ok=True)
 
     ## extract audio
     utils.strip_audio_from_vid(video_path, extracted_audio_path)
@@ -44,7 +41,7 @@ if __name__ == "__main__":
     audio_paths = []
 
     for i, group in enumerate(tqdm.tqdm(sentence_groups)):
-        chunk_audio_path = chunk_paths / f"{i}.wav"
+        chunk_audio_path = chunks_path / f"{i}.wav"
 
         if not chunk_audio_path.exists():
             voice_clone_func(
@@ -62,16 +59,52 @@ if __name__ == "__main__":
         current_duration = librosa.get_duration(path=audio_path)
         utils.stretch_speech(
             audio_path,
-            chunk_paths / f"{i}_stretched.wav",
+            chunks_path / f"{i}_stretched.wav",
             actual_duration / current_duration,
         )
-        stretched_audio_paths.append(chunk_paths / f"{i}_stretched.wav")
+        stretched_audio_paths.append(chunks_path / f"{i}_stretched.wav")
         abs_duration_diff += abs(actual_duration - current_duration)
 
+    torch.cuda.empty_cache()
     ## stitch all audio and add to video
     utils.stitch_audio(stretched_audio_paths, translated_audio_path)
+
+    if enhance_audio:
+        utils.enhance_audio(translated_audio_path, translated_audio_path)
+
     utils.combine_video_audio(video_path, translated_audio_path, final_video_path)
 
     print(
         f"Total Duration Difference when generating audio: {round(abs_duration_diff, 2)} seconds"
+    )
+
+    return final_video_path, translated_audio_path, abs_duration_diff
+
+
+if __name__ == "__main__":
+    ## all paths
+    video_path = pathlib.Path("../../data/Tanzania-2.mp4")
+    srt_path = pathlib.Path("../../data/Tanzania-caption.srt")
+    extracted_audio_path = video_path.with_name(
+        video_path.stem + "_extracted_audio.wav"
+    )
+    translated_audio_path = video_path.with_name(video_path.stem + "_translated.wav")
+    translated_text_path = video_path.parent / "translated_text.txt"
+    final_video_path = video_path.with_name(video_path.stem + "_translated.mp4")
+    chunks_path = pathlib.Path("../../data/chunks")
+    enhance_audio = True
+    target_language = "de"
+
+    final_video_path, translated_audio_path, abs_duration_diff = translate_audio(
+        video_path=video_path,
+        srt_path=srt_path,
+        extracted_audio_path=extracted_audio_path,
+        translated_audio_path=translated_audio_path,
+        translated_text_path=translated_text_path,
+        final_video_path=final_video_path,
+        chunks_path=chunks_path,
+        enhance_audio=enhance_audio,
+        target_language=target_language,
+        voice_clone_func=voice_clone.tacotron2_generate_from_transcript,
+        translate_func=translate.helsinki_translate,
     )

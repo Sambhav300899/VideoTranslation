@@ -30,14 +30,34 @@ def chatterbox_generate_from_transcript(
 
 
 @torch.no_grad()
-def xtts_generate_from_transcript(
+def xtts2_generate_from_transcript(
+    transcript, styling_prompt_path, output_path, device=default_device
+):
+    from TTS.api import TTS
+
+    tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
+
+    tts.tts_to_file(
+        text=transcript,
+        file_path=output_path,
+        speaker_wav=styling_prompt_path,
+        language="de",
+        speed=1.2,
+        temperature=0.7,
+        gpt_cond_len=3,
+    )
+
+
+@torch.no_grad()
+def tacotron2_generate_from_transcript(
     transcript, styling_prompt_path, output_path, device=default_device
 ):
     from TTS.api import TTS
 
     tts = TTS("tts_models/de/thorsten/tacotron2-DDC").to(device)
-    # tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=True).to(device)
 
     tts.tts_with_vc_to_file(
-        transcript, speaker_wav=styling_prompt_path, file_path=output_path
+        transcript,
+        speaker_wav=styling_prompt_path,
+        file_path=output_path,
     )

@@ -1,0 +1,8 @@
+mediapipe
+decord
+kornia
+insightface
+ffmpeg
+onnxruntime-gpu
+DeepCache
+ffmpeg-python

@@ -3,6 +3,9 @@ import moviepy
 import parselmouth
 from parselmouth.praat import call
 import tempfile
+import pedalboard
+from pedalboard.io import AudioFile
+import noisereduce as nr
 
 
 def load_srt(srt_path):
@@ -81,10 +84,31 @@ def combine_video_audio(video_path, audio_path, output_path):
 
     factor = video.duration / audio.duration
 
-    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_audio_file:
+    with tempfile.NamedTemporaryFile(suffix=".wav") as temp_audio_file:
         stretched_audio_path = temp_audio_file.name
         stretch_speech(audio_path, stretched_audio_path, factor)
         audio = moviepy.AudioFileClip(stretched_audio_path)
 
     video = video.with_audio(audio)
     video.write_videofile(output_path, codec="libx264", audio_codec="aac")
+
+
+def enhance_audio(audio_path, output_path, sr=44100):
+    with AudioFile(str(audio_path)).resampled_to(sr) as audio_file:
+        audio = audio_file.read(audio_file.frames)
+
+    reduced_noise = nr.reduce_noise(y=audio, sr=sr, stationary=True, prop_decrease=0.75)
+
+    board = pedalboard.Pedalboard(
+        [
+            pedalboard.NoiseGate(threshold_db=-30, ratio=1.5, release_ms=250),
+            pedalboard.Compressor(threshold_db=-16, ratio=4),
+            pedalboard.LowShelfFilter(cutoff_frequency_hz=400, gain_db=10, q=1),
+            pedalboard.Gain(gain_db=2),
+        ]
+    )
+
+    effected = board(reduced_noise, sr)
+
+    with AudioFile(str(output_path), "w", sr, effected.shape[0]) as f:
+        f.write(effected)
